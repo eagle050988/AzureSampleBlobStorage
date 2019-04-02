@@ -41,7 +41,8 @@ use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
 use MicrosoftAzure\Storage\Blob\Models\CreateContainerOptions;
 use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
 
-$connectionString = "DefaultEndpointsProtocol=https;AccountName=naystechstorage;AccountKey=KXf7IqpkWpzlmmtK2iPty1xTcW3XMluIXB5pdJfL9La97bF3WFo8AxM5TLXo6OfMuNaCZF9GsdY3uEPr/CMT9w==;EndpointSuffix=core.windows.net";//.getenv('naystechstorage').";AccountKey=".getenv('KXf7IqpkWpzlmmtK2iPty1xTcW3XMluIXB5pdJfL9La97bF3WFo8AxM5TLXo6OfMuNaCZF9GsdY3uEPr/CMT9w==');
+//$connectionString = "DefaultEndpointsProtocol=https;AccountName=".getenv('ACCOUNT_NAME').";AccountKey=".getenv('ACCOUNT_KEY');
+$connectionString = "DefaultEndpointsProtocol=https;AccountName=naystechstorage;AccountKey=KXf7IqpkWpzlmmtK2iPty1xTcW3XMluIXB5pdJfL9La97bF3WFo8AxM5TLXo6OfMuNaCZF9GsdY3uEPr/CMT9w==";
 
 // Create blob client.
 $blobClient = BlobRestProxy::createBlobService($connectionString);
@@ -80,6 +81,7 @@ if (!isset($_GET["Cleanup"])) {
 
         // Getting local file so that we can upload it to Azure
         $myfile = fopen($fileToUpload, "w") or die("Unable to open file!");
+        fwrite($myfile, 'piye kabare azure....'.$containerName);
         fclose($myfile);
         
         # Upload file as a block blob
@@ -152,6 +154,8 @@ else
     }
 }
 ?>
+
+
 <form method="post" action="index.php?Cleanup&containerName=<?php echo $containerName; ?>">
     <button type="submit">Press to clean up all resources created by this sample</button>
 </form>
